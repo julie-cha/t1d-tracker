@@ -1,66 +1,105 @@
-# 당뇨 관리 앱 (Diabetes Care App)
+# Diabetes Care App
 
-## 프로젝트 개요
-이 앱은 당뇨병 환자들이 혈당, 식사, 운동, 약물 복용을 체계적으로 관리할 수 있도록 도와주는 모바일 애플리케이션입니다.
+## Project Overview
+This mobile application helps diabetes patients systematically manage their blood glucose, meals, exercise, and medication intake.
 
-## 주요 기능
-- 📊 **혈당 기록**: 혈당 수치를 시간대별로 기록하고 추적
-- 🍽️ **식사 기록**: 섭취한 음식과 영양소 정보 기록
-- 🏃‍♂️ **운동 기록**: 운동 종류, 시간, 강도 기록
-- 💊 **약물 관리**: 복용해야 할 약물과 복용 시간 알림
-- 📈 **데이터 분석**: 혈당 추이와 건강 지표 분석
-- 🎯 **목표 설정**: 개인 건강 목표 설정 및 달성도 추적
+## Key Features
+- 📊 **Blood Glucose Tracking**: Record and track blood glucose levels by time periods
+- 🍽️ **Meal Logging**: Record consumed food and nutritional information
+- 🏃‍♂️ **Exercise Tracking**: Record exercise type, duration, and intensity
+- 💊 **Medication Management**: Medication reminders and dosage tracking
+- 📈 **Data Analysis**: Analyze blood glucose trends and health indicators
+- 🎯 **Goal Setting**: Set personal health goals and track achievement progress
 
-## 기술 스택
+## Tech Stack
 - React Native (Expo)
 - TypeScript
 - React Navigation
 - AsyncStorage
 - React Native Chart Kit
 
-## 설치 및 실행
+## Environment Setup
 
-### 필수 요구사항
-- Node.js (v16 이상)
-- npm 또는 yarn
+### Development Environment
+```bash
+# Run development environment
+npm run start:dev
+npm run android:dev
+npm run ios:dev
+npm run web:dev
+```
+
+### Production Environment
+```bash
+# Run production environment
+npm run start:prod
+npm run android:prod
+npm run ios:prod
+npm run web:prod
+```
+
+## Branch Strategy
+
+- `main`: Production branch (stable code)
+- `dev`: Development branch (features in development)
+
+### Development Workflow
+
+1. Develop new features in `dev` branch
+2. Test completed features in `dev`
+3. Merge stable code to `main`
+
+## Environment Variables
+
+Environment-specific configuration files:
+- `.env.development`: Development environment settings
+- `.env.production`: Production environment settings
+- `.env.example`: Environment variables template
+
+## Installation and Setup
+
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
 - Expo CLI
 
-### 설치 방법
+### Installation
 ```bash
-# 의존성 설치
+# Install dependencies
 npm install
 
-# 개발 서버 실행
-npm start
+# Run development server
+npm run start:dev
 
-# iOS 시뮬레이터에서 실행
-npm run ios
+# Run on iOS simulator (development)
+npm run ios:dev
 
-# Android 에뮬레이터에서 실행
-npm run android
+# Run on Android emulator (development)
+npm run android:dev
 
-# 웹에서 실행
-npm run web
+# Run on web (development)
+npm run web:dev
 ```
 
-## 프로젝트 구조
+## Project Structure
 ```
 src/
-├── components/     # 재사용 가능한 컴포넌트
-├── screens/        # 화면 컴포넌트
-├── navigation/     # 네비게이션 설정
-├── types/          # TypeScript 타입 정의
-└── utils/          # 유틸리티 함수
+├── components/     # Reusable components
+├── screens/        # Screen components
+├── navigation/     # Navigation configuration
+├── types/          # TypeScript type definitions
+└── utils/          # Utility functions
+config/             # Environment configuration files
 ```
 
-## 개발 계획
-- [ ] 혈당 입력 및 기록 기능
-- [ ] 식사 정보 입력 폼
-- [ ] 운동 기록 기능
-- [ ] 약물 알림 시스템
-- [ ] 데이터 시각화 (차트)
-- [ ] 사용자 프로필 관리
-- [ ] 데이터 백업 및 동기화
+## Development Roadmap
+- [ ] Blood glucose input and recording functionality
+- [ ] Meal information input form
+- [ ] Exercise tracking functionality
+- [ ] Medication reminder system
+- [ ] Data visualization (charts)
+- [ ] User profile management
+- [ ] Data backup and synchronization
 
-## 라이선스
+## License
 MIT License

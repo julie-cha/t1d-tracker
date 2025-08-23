@@ -4,9 +4,19 @@
   "main": "index.ts",
   "scripts": {
     "start": "expo start",
+    "start:dev": "NODE_ENV=development expo start",
+    "start:prod": "NODE_ENV=production expo start",
     "android": "expo start --android",
+    "android:dev": "NODE_ENV=development expo start --android",
+    "android:prod": "NODE_ENV=production expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "ios:dev": "NODE_ENV=development expo start --ios",
+    "ios:prod": "NODE_ENV=production expo start --ios",
+    "web": "expo start --web",
+    "web:dev": "NODE_ENV=development expo start --web",
+    "web:prod": "NODE_ENV=production expo start --web",
+    "build:dev": "NODE_ENV=development expo build",
+    "build:prod": "NODE_ENV=production expo build"
   },
   "dependencies": {
     "@expo/metro-runtime": "~5.0.4",
