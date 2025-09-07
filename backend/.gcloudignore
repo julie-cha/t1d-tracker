@@ -1,0 +1,34 @@
+# Node.js dependencies
+node_modules/
+
+# TypeScript source files (only deploy compiled JS)
+src/
+*.ts
+!*.d.ts
+
+# Development files
+.env
+.env.local
+.env.development
+*.log
+.DS_Store
+
+# Git
+.git/
+.gitignore
+
+# Documentation
+README.md
+docs/
+
+# Scripts
+scripts/
+
+# IDE
+.vscode/
+.idea/
+
+# Tests
+__tests__/
+*.test.js
+*.spec.js

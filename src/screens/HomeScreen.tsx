@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { colors } from '../styles/colors';
 
 export const HomeScreen: React.FC = () => {
   return (
@@ -74,9 +75,6 @@ export const HomeScreen: React.FC = () => {
             </View>
           </View>
         </View>
-        <TouchableOpacity style={styles.chatButton}>
-          <Ionicons name="chatbubble" size={24} color="#666" />
-        </TouchableOpacity>
       </View>
 
       <View style={styles.actionButtons}>
@@ -101,10 +99,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingTop: 60,
-    paddingBottom: 30,
+    paddingTop: 20,
+    paddingBottom: 20,
     paddingHorizontal: 10,
-    minHeight: 120,
+    minHeight: 80,
   },
   profileSection: {
     alignItems: 'center',
@@ -306,17 +304,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     transform: [{ rotate: '15deg' }],
-  },
-  chatButton: {
-    position: 'absolute',
-    right: -20,
-    top: 10,
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: '#E0E0E0',
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   actionButtons: {
     flexDirection: 'row',

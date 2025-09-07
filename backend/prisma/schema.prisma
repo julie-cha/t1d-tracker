@@ -1,0 +1,68 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  glucoseReadings GlucoseReading[]
+  meals          Meal[]
+  activities     Activity[]
+}
+
+model GlucoseReading {
+  id        String   @id @default(uuid())
+  userId    String
+  value     Float
+  unit      String   @default("mg/dL")
+  timestamp DateTime @default(now())
+  notes     String?
+  mealType  String?  // breakfast, lunch, dinner, snack
+  timing    String?  // before, after
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Meal {
+  id           String   @id @default(uuid())
+  userId       String
+  name         String
+  description  String?
+  calories     Float?
+  carbs        Float?
+  protein      Float?
+  fat          Float?
+  fiber        Float?
+  timestamp    DateTime @default(now())
+  mealType     String   // breakfast, lunch, dinner, snack
+  imageUrl     String?
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Activity {
+  id          String   @id @default(uuid())
+  userId      String
+  type        String   // walking, running, cycling, swimming, etc.
+  duration    Int      // in minutes
+  intensity   String   // low, moderate, high
+  calories    Float?
+  startTime   DateTime
+  endTime     DateTime?
+  notes       String?
+  createdAt   DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
