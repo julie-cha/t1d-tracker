@@ -13,18 +13,23 @@ export const HomeScreen: React.FC = () => {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header}>
+        {/* Profile Section */}
         <View style={styles.profileSection}>
           <View style={styles.profilePic}>
             <Text style={styles.profileInitial}>M</Text>
           </View>
-          <Text style={styles.profileName}>Mochi</Text>
         </View>
 
+        {/* Glucose Section */}
         <View style={styles.glucoseSection}>
-          <Text style={styles.glucoseValue}>99 mg/dL</Text>
+          <View style={styles.glucoseContainer}>
+            <Text style={styles.glucoseValue}>99</Text>
+            <Text style={styles.glucoseUnit}>mg/dL</Text>
+          </View>
           <Text style={styles.timeStamp}>5 min ago</Text>
         </View>
 
+        {/* Streak Section */}
         <View style={styles.streakSection}>
           <View style={styles.streakRow}>
             <Ionicons name="star" size={20} color="#FFD700" />
@@ -34,47 +39,44 @@ export const HomeScreen: React.FC = () => {
         </View>
       </View>
 
-      <View style={styles.logCard}>
-        <Text style={styles.logTitle}>Today's log</Text>
-        <View style={styles.logStats}>
-          <View style={styles.statItem}>
-            <View style={styles.statCircle}>
-              <Text style={styles.statNumber}>1</Text>
-            </View>
-            <Text style={styles.statLabel}>Mismatched</Text>
-          </View>
-          <View style={styles.statItem}>
-            <View style={styles.statCircle}>
-              <Text style={styles.statNumber}>2</Text>
-            </View>
-            <Text style={styles.statLabel}>Resolved</Text>
-          </View>
-        </View>
-      </View>
-
-      <View style={styles.messageCard}>
-        <Text style={styles.messageText}>
-          Whoa soccer superstar!{'\n'}
-          Do you want to take a second to see how{'\n'}
-          your body is doing?{'\n'}
-          sentence 4{'\n'}
-          sentence 5
-        </Text>
-        <View style={styles.messageArrow} />
-      </View>
 
       <View style={styles.characterSection}>
-        <View style={styles.characterContainer}>
-          <View style={styles.cloudCharacter}>
-            <View style={styles.cloudTop} />
-            <View style={styles.cloudBottom} />
-            <View style={styles.cloudFace}>
-              <View style={styles.cloudEyeLeft} />
-              <View style={styles.cloudEyeRight} />
-              <View style={styles.cloudMouth} />
-            </View>
-          </View>
+        {/* Speech bubble above character */}
+        <View style={styles.speechBubble}>
+          <Text style={styles.speechText}>
+            📝 Let's log some data!{'\n'}
+            Time to record your activities!
+          </Text>
+          <View style={styles.speechArrow} />
         </View>
+        
+        {/* Character below speech bubble */}
+        <View style={styles.cuteBird}>
+            {/* Bird Body */}
+            <View style={styles.birdBody} />
+            
+            {/* Bird Head */}
+            <View style={styles.birdHead}>
+              {/* Eyes */}
+              <View style={styles.birdEyeLeft} />
+              <View style={styles.birdEyeRight} />
+              
+              {/* Eye pupils */}
+              <View style={styles.birdPupilLeft} />
+              <View style={styles.birdPupilRight} />
+              
+              {/* Beak */}
+              <View style={styles.birdBeak} />
+              
+              {/* Cheeks */}
+              <View style={styles.birdCheekLeft} />
+              <View style={styles.birdCheekRight} />
+            </View>
+            
+            {/* Wings */}
+            <View style={styles.birdWingLeft} />
+            <View style={styles.birdWingRight} />
+          </View>
       </View>
 
       <View style={styles.actionButtons}>
@@ -92,7 +94,7 @@ export const HomeScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7B7B7B',
+    backgroundColor: colors.background,
     paddingHorizontal: 30,
   },
   header: {
@@ -101,10 +103,28 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 20,
     paddingBottom: 20,
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
     minHeight: 80,
   },
+  headerItem: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+  },
   profileSection: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    height: 80,
+  },
+  glucoseSection: {
+    alignItems: 'center',
+    flex: 1,
+    justifyContent: 'center',
+    height: 80,
+  },
+  streakSection: {
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
@@ -114,43 +134,45 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: colors.cardBackground,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   profileInitial: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: '#666',
+    color: colors.primary,
   },
   profileName: {
     fontSize: 14,
-    color: 'white',
+    color: colors.textPrimary,
     fontWeight: '500',
   },
-  glucoseSection: {
+  glucoseContainer: {
     alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    height: 80,
+    marginBottom: 4,
   },
   glucoseValue: {
     fontSize: 24,
     fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 4,
+    color: colors.primary,
+  },
+  glucoseUnit: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    fontWeight: '500',
+    marginTop: 2,
   },
   timeStamp: {
     fontSize: 14,
-    color: 'white',
+    color: colors.textSecondary,
     fontWeight: '500',
-  },
-  streakSection: {
-    alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    height: 80,
   },
   streakRow: {
     flexDirection: 'row',
@@ -160,154 +182,203 @@ const styles = StyleSheet.create({
   streakNumber: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
+    color: colors.primary,
     marginLeft: 4,
   },
   streakLabel: {
     fontSize: 14,
-    color: 'white',
+    color: colors.textSecondary,
     fontWeight: '500',
     marginTop: 2,
   },
-  logCard: {
-    backgroundColor: '#E0E0E0',
-    borderRadius: 16,
-    padding: 20,
+  speechBubble: {
+    backgroundColor: colors.cardBackground,
+    borderRadius: 20,
+    padding: 16,
+    marginHorizontal: 20,
     marginBottom: 20,
-    marginHorizontal: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    alignSelf: 'center',
   },
-  logTitle: {
+  speechText: {
     fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 16,
-  },
-  logStats: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  },
-  statItem: {
-    alignItems: 'center',
-  },
-  statCircle: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 8,
-  },
-  statNumber: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-  statLabel: {
-    fontSize: 14,
-    color: '#666',
-  },
-  messageCard: {
-    backgroundColor: '#E0E0E0',
-    borderRadius: 16,
-    padding: 20,
-    marginBottom: 30,
-    marginHorizontal: 10,
-    position: 'relative',
-  },
-  messageText: {
-    fontSize: 16,
-    color: '#333',
+    color: colors.textPrimary,
     lineHeight: 24,
+    textAlign: 'center',
+    fontWeight: '600',
+    marginBottom: 12,
   },
-  messageArrow: {
+  notificationFooter: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 8,
+    borderTopWidth: 1,
+    borderTopColor: '#F0F0F0',
+    marginTop: 8,
+  },
+  previousNotificationsText: {
+    fontSize: 12,
+    color: colors.textSecondary,
+    marginRight: 4,
+    fontWeight: '500',
+  },
+  speechArrow: {
     position: 'absolute',
-    bottom: -10,
-    left: 30,
+    bottom: -8,
+    alignSelf: 'center',
     width: 0,
     height: 0,
-    borderLeftWidth: 10,
-    borderRightWidth: 10,
+    borderLeftWidth: 8,
+    borderRightWidth: 8,
     borderTopWidth: 10,
     borderLeftColor: 'transparent',
     borderRightColor: 'transparent',
-    borderTopColor: '#E0E0E0',
+    borderTopColor: colors.cardBackground,
   },
   characterSection: {
     alignItems: 'center',
     marginBottom: 30,
     position: 'relative',
   },
-  characterContainer: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: '#F0F0F0',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  cloudCharacter: {
-    width: 100,
-    height: 80,
+  cuteBird: {
+    width: 180,
+    height: 180,
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  cloudTop: {
-    width: 25,
-    height: 25,
-    borderRadius: 15,
-    backgroundColor: '#C0C0C0',
-    position: 'absolute',
-    top: 0,
     alignSelf: 'center',
   },
-  cloudBottom: {
-    width: 80,
-    height: 50,
-    borderRadius: 40,
-    backgroundColor: '#C0C0C0',
+  birdBody: {
+    width: 120,
+    height: 100,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 60,
     position: 'absolute',
-    bottom: 0,
+    bottom: 15,
+    zIndex: 1,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
-  cloudFace: {
+  birdHead: {
+    width: 95,
+    height: 95,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 48,
     position: 'absolute',
-    width: 80,
-    height: 50,
-    bottom: 0,
+    top: 0,
+    zIndex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
   },
-  cloudEyeLeft: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#333',
+  birdEyeLeft: {
+    width: 22,
+    height: 22,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 11,
     position: 'absolute',
-    left: 22,
-    top: 15,
+    left: 20,
+    top: 25,
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
   },
-  cloudEyeRight: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-    backgroundColor: '#333',
+  birdEyeRight: {
+    width: 22,
+    height: 22,
+    backgroundColor: '#FFFFFF',
+    borderRadius: 11,
     position: 'absolute',
-    right: 22,
-    top: 15,
+    right: 20,
+    top: 25,
+    borderWidth: 1,
+    borderColor: '#CCCCCC',
   },
-  cloudMouth: {
-    width: 12,
-    height: 2,
-    backgroundColor: '#333',
-    borderRadius: 1,
+  birdPupilLeft: {
+    width: 11,
+    height: 11,
+    backgroundColor: '#333333',
+    borderRadius: 6,
     position: 'absolute',
-    bottom: 20,
+    left: 26,
+    top: 31,
+    zIndex: 3,
+  },
+  birdPupilRight: {
+    width: 11,
+    height: 11,
+    backgroundColor: '#333333',
+    borderRadius: 6,
+    position: 'absolute',
+    right: 26,
+    top: 31,
+    zIndex: 3,
+  },
+  birdBeak: {
+    width: 0,
+    height: 0,
+    borderLeftWidth: 11,
+    borderRightWidth: 11,
+    borderTopWidth: 16,
+    borderLeftColor: 'transparent',
+    borderRightColor: 'transparent',
+    borderTopColor: '#FFB74D',
+    position: 'absolute',
+    bottom: 25,
+  },
+  birdCheekLeft: {
+    width: 16,
+    height: 12,
+    backgroundColor: '#FFE0E0',
+    borderRadius: 8,
+    position: 'absolute',
+    left: 10,
+    top: 45,
+  },
+  birdCheekRight: {
+    width: 16,
+    height: 12,
+    backgroundColor: '#FFE0E0',
+    borderRadius: 8,
+    position: 'absolute',
+    right: 10,
+    top: 45,
+  },
+  birdWingLeft: {
+    width: 35,
+    height: 48,
+    backgroundColor: '#F8F8F8',
+    borderRadius: 25,
+    position: 'absolute',
+    left: 12,
+    bottom: 35,
+    zIndex: 0,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
+    transform: [{ rotate: '-15deg' }],
+  },
+  birdWingRight: {
+    width: 35,
+    height: 48,
+    backgroundColor: '#F8F8F8',
+    borderRadius: 25,
+    position: 'absolute',
+    right: 12,
+    bottom: 35,
+    zIndex: 0,
+    borderWidth: 1,
+    borderColor: '#E0E0E0',
     transform: [{ rotate: '15deg' }],
   },
   actionButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
     paddingHorizontal: 40,
     marginBottom: 20,
   },
@@ -315,8 +386,13 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: '#E0E0E0',
+    backgroundColor: colors.cardBackground,
     justifyContent: 'center',
     alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
 });

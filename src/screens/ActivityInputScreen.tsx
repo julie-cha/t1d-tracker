@@ -21,6 +21,7 @@ interface ActivityInputScreenProps {
   category: string;
   subcategory: string;
   subcategoryTitle: string;
+  selectedOptions?: string[];
   onBack: () => void;
   onSave: (data: any) => void;
 }
@@ -29,6 +30,7 @@ export const ActivityInputScreen: React.FC<ActivityInputScreenProps> = ({
   category,
   subcategory,
   subcategoryTitle,
+  selectedOptions,
   onBack,
   onSave,
 }) => {
@@ -70,6 +72,7 @@ export const ActivityInputScreen: React.FC<ActivityInputScreenProps> = ({
       subcategoryTitle,
       timestamp: new Date().toISOString(),
       notes,
+      selectedOptions: selectedOptions || [],
     };
 
     let specificData = {};
@@ -322,6 +325,21 @@ export const ActivityInputScreen: React.FC<ActivityInputScreenProps> = ({
 
   const renderSymptomsForm = () => (
     <>
+      {selectedOptions && selectedOptions.length > 0 && (
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>Selected Symptoms</Text>
+          <View style={styles.selectedOptionsContainer}>
+            {selectedOptions.map((option) => (
+              <View key={option} style={styles.selectedOptionTag}>
+                <Text style={styles.selectedOptionText}>
+                  {option.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      )}
+      
       <View style={styles.inputGroup}>
         <Text style={styles.label}>Severity (1-5)</Text>
         <View style={styles.ratingContainer}>
@@ -367,6 +385,23 @@ export const ActivityInputScreen: React.FC<ActivityInputScreenProps> = ({
 
   const renderMoodStressForm = () => (
     <>
+      {selectedOptions && selectedOptions.length > 0 && (
+        <View style={styles.inputGroup}>
+          <Text style={styles.label}>
+            {category === 'mood' ? 'Selected Moods' : 'Selected Stress Factors'}
+          </Text>
+          <View style={styles.selectedOptionsContainer}>
+            {selectedOptions.map((option) => (
+              <View key={option} style={styles.selectedOptionTag}>
+                <Text style={styles.selectedOptionText}>
+                  {option.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                </Text>
+              </View>
+            ))}
+          </View>
+        </View>
+      )}
+      
       <View style={styles.inputGroup}>
         <Text style={styles.label}>Intensity (1-5)</Text>
         <View style={styles.ratingContainer}>
@@ -573,5 +608,24 @@ const styles = StyleSheet.create({
     color: colors.textSecondary,
     marginTop: 4,
     fontStyle: 'italic',
+  },
+  selectedOptionsContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  selectedOptionTag: {
+    backgroundColor: colors.primary + '20',
+    borderColor: colors.primary,
+    borderWidth: 1,
+    borderRadius: 16,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    marginBottom: 4,
+  },
+  selectedOptionText: {
+    fontSize: 13,
+    fontWeight: '500',
+    color: colors.primary,
   },
 });

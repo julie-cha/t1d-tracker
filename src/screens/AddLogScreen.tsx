@@ -10,6 +10,8 @@ import {
 import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { PageHeader } from '../components/PageHeader';
 import { ActivityDetailScreen } from './ActivityDetailScreen';
+import { ActivityInputScreen } from './ActivityInputScreen';
+import { MultipleChoiceScreen } from './MultipleChoiceScreen';
 import { colors } from '../styles/colors';
 
 const activityCategories = [
@@ -71,23 +73,99 @@ const activityCategories = [
 
 export const AddLogScreen: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [showDirectInput, setShowDirectInput] = useState<{category: string, title: string} | null>(null);
+  const [showMultipleChoice, setShowMultipleChoice] = useState<'symptoms' | 'mood' | null>(null);
+  const [multipleChoiceData, setMultipleChoiceData] = useState<{category: string, selectedOptions: string[]} | null>(null);
 
   const handleActivityPress = (activityId: string) => {
     console.log('Selected activity:', activityId);
-    setSelectedCategory(activityId);
+    
+    // Categories that use multiple choice screen
+    if (activityId === 'symptoms' || activityId === 'mood') {
+      setShowMultipleChoice(activityId as 'symptoms' | 'mood');
+    }
+    // Categories that skip the detail screen and go directly to input
+    else if (activityId === 'sleep' || activityId === 'stress' || activityId === 'notes') {
+      const categoryTitles = {
+        sleep: 'Sleep',
+        stress: 'Stress',
+        notes: 'Notes'
+      };
+      setShowDirectInput({
+        category: activityId,
+        title: categoryTitles[activityId as keyof typeof categoryTitles]
+      });
+    } else {
+      setSelectedCategory(activityId);
+    }
   };
 
   const handleBackToCategories = () => {
     setSelectedCategory(null);
+    setShowDirectInput(null);
+    setShowMultipleChoice(null);
+    setMultipleChoiceData(null);
   };
 
   const handleFinalSave = (data: any) => {
     console.log('Activity saved successfully:', data);
+    if (multipleChoiceData) {
+      console.log('Multiple choice data:', multipleChoiceData);
+      // Combine multiple choice data with time/notes data
+      const finalData = {
+        ...data,
+        selectedOptions: multipleChoiceData.selectedOptions,
+        category: multipleChoiceData.category
+      };
+      console.log('Final combined data:', finalData);
+    }
     // TODO: Save to database/storage
     // Show success message and go back to main categories
     setSelectedCategory(null);
+    setShowDirectInput(null);
+    setShowMultipleChoice(null);
+    setMultipleChoiceData(null);
     // Could add a toast or success message here
   };
+
+  const handleMultipleChoiceSave = (selectedOptions: string[]) => {
+    console.log('Multiple choice saved:', showMultipleChoice, selectedOptions);
+    // Store the selection data and move to input screen
+    setMultipleChoiceData({
+      category: showMultipleChoice!,
+      selectedOptions
+    });
+    setShowMultipleChoice(null);
+    setShowDirectInput({
+      category: showMultipleChoice!,
+      title: showMultipleChoice === 'symptoms' ? 'Symptoms' : 'Mood'
+    });
+  };
+
+  // Show multiple choice screen for symptoms and mood
+  if (showMultipleChoice) {
+    return (
+      <MultipleChoiceScreen
+        category={showMultipleChoice}
+        onBack={handleBackToCategories}
+        onSave={handleMultipleChoiceSave}
+      />
+    );
+  }
+
+  // Show direct input screen for sleep, stress, and notes
+  if (showDirectInput) {
+    return (
+      <ActivityInputScreen
+        category={showDirectInput.category as any}
+        subcategory="general"
+        subcategoryTitle={showDirectInput.title}
+        selectedOptions={multipleChoiceData?.selectedOptions}
+        onBack={handleBackToCategories}
+        onSave={handleFinalSave}
+      />
+    );
+  }
 
   // Show activity detail screen if a category is selected
   if (selectedCategory) {
