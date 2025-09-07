@@ -3,92 +3,56 @@ import {
   View,
   Text,
   StyleSheet,
-  SafeAreaView,
   TouchableOpacity,
   ScrollView,
-  Dimensions,
+  SafeAreaView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { PageHeader } from '../components/PageHeader';
+import { GlucoseChart } from '../components/GlucoseChart';
+import { colors } from '../styles/colors';
 
-const { width } = Dimensions.get('window');
 
 export const LogScreen: React.FC = () => {
-  const [selectedDate, setSelectedDate] = useState('Today');
+  const [selectedDate] = useState('Today');
   const [showCalendar, setShowCalendar] = useState(false);
 
   return (
-    <View style={styles.container}>
-      <ScrollView style={styles.scrollContainer}>
-        {/* Date Selector */}
-        <View style={styles.dateSection}>
-          <TouchableOpacity
-            style={styles.dateSelector}
-            onPress={() => setShowCalendar(!showCalendar)}
-          >
-            <Text style={styles.dateText}>{selectedDate}</Text>
-            <Ionicons
-              name={showCalendar ? 'chevron-up' : 'chevron-down'}
-              size={20}
-              color="#666"
-            />
-          </TouchableOpacity>
-          
+    <SafeAreaView style={styles.container}>
+      {/* Page Header */}
+      <PageHeader>
+        <TouchableOpacity
+          style={styles.headerDateSelector}
+          onPress={() => setShowCalendar(!showCalendar)}
+        >
+          <Text style={styles.headerDateText}>{selectedDate}</Text>
+          <Ionicons
+            name={showCalendar ? 'chevron-up' : 'chevron-down'}
+            size={20}
+            color={colors.primary}
+          />
+        </TouchableOpacity>
+      </PageHeader>
+
+      <ScrollView style={styles.scrollView}>
+        <View style={styles.scrollContainer}>
           {showCalendar && (
             <View style={styles.calendarDropdown}>
               <Text style={styles.calendarPlaceholder}>Calendar will be here</Text>
             </View>
           )}
-        </View>
 
-        {/* Blood Glucose Chart */}
-        <View style={styles.chartSection}>
-          <Text style={styles.sectionTitle}>Blood Glucose</Text>
-          <View style={styles.chartContainer}>
-            <View style={styles.chartPlaceholder}>
-              <Text style={styles.chartText}>Glucose Chart</Text>
-            </View>
-          </View>
-        </View>
+      </View>
+      
+      {/* Full Width Chart */}
+      <GlucoseChart />
+      
+      <View style={styles.scrollContainer}>
 
-        {/* Activity Timeline */}
-        <View style={styles.timelineSection}>
-          <Text style={styles.sectionTitle}>Activity Timeline</Text>
-          
-          {/* Child Row */}
-          <View style={styles.timelineRow}>
-            <Text style={styles.rowLabel}>Child</Text>
-            <View style={styles.activityTrack}>
-              <View style={[styles.activityItem, { left: '20%' }]} />
-              <View style={[styles.activityItem, { left: '50%' }]} />
-            </View>
-          </View>
-          
-          {/* Parent Row */}
-          <View style={styles.timelineRow}>
-            <Text style={styles.rowLabel}>Parent</Text>
-            <View style={styles.activityTrack}>
-              <View style={[styles.activityItem, { left: '25%' }]} />
-              <View style={[styles.activityItem, { left: '45%' }]} />
-            </View>
-          </View>
-          
-          {/* Time labels */}
-          <View style={styles.timeLabels}>
-            <Text style={styles.timeLabel}>6AM</Text>
-            <Text style={styles.timeLabel}>12PM</Text>
-            <Text style={styles.timeLabel}>6PM</Text>
-            <Text style={styles.timeLabel}>12AM</Text>
-          </View>
-        </View>
 
-        {/* Spacer for bottom overlay */}
-        <View style={styles.spacer} />
-      </ScrollView>
-
-      {/* Activity Details Overlay */}
-      <View style={styles.activityOverlay}>
-        <View style={styles.overlayContent}>
-          <Text style={styles.overlayTitle}>Activity Details</Text>
+        {/* Activity Details Section */}
+        <View style={styles.activityDetailsSection}>
+          <Text style={styles.sectionTitle}>Activity Details</Text>
           
           <View style={styles.activityCard}>
             <View style={styles.activityHeader}>
@@ -116,144 +80,147 @@ export const LogScreen: React.FC = () => {
             </Text>
           </View>
         </View>
-      </View>
-    </View>
+
+          {/* Bottom padding for tab bar */}
+          <View style={styles.bottomPadding} />
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7B7B7B',
-    position: 'relative',
+    backgroundColor: colors.background,
+  },
+  scrollView: {
+    flex: 1,
   },
   scrollContainer: {
-    flex: 1,
     paddingHorizontal: 20,
   },
-  dateSection: {
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-  dateSelector: {
+  headerDateSelector: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E0E0E0',
-    borderRadius: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
+    paddingHorizontal: 10,
   },
-  dateText: {
-    fontSize: 18,
+  headerDateText: {
+    fontSize: 20,
     fontWeight: '600',
-    color: '#333',
-    marginRight: 8,
+    color: colors.primary,
+    marginRight: 10,
   },
   calendarDropdown: {
-    backgroundColor: '#E0E0E0',
-    borderRadius: 12,
-    marginTop: 8,
+    backgroundColor: colors.cardBackground,
+    borderRadius: 20,
+    marginTop: 10,
+    marginBottom: 10,
     padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   calendarPlaceholder: {
     textAlign: 'center',
     color: '#666',
   },
-  chartSection: {
-    marginBottom: 30,
-  },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: 'white',
+    color: colors.textPrimary,
     marginBottom: 15,
   },
-  chartContainer: {
-    backgroundColor: '#E0E0E0',
-    borderRadius: 12,
-    padding: 20,
-    height: 150,
-  },
-  chartPlaceholder: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  chartText: {
-    fontSize: 16,
-    color: '#666',
-  },
   timelineSection: {
-    marginBottom: 100,
+    marginBottom: 30,
+  },
+  sectionHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+    gap: 8,
+  },
+  timelineCard: {
+    backgroundColor: colors.cardBackground,
+    borderRadius: 20,
+    padding: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   timelineRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 15,
+    marginBottom: 20,
     height: 40,
   },
+  rowLabelContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: 80,
+    gap: 8,
+  },
+  emoji: {
+    fontSize: 20,
+  },
   rowLabel: {
-    width: 60,
     fontSize: 14,
-    fontWeight: '500',
-    color: 'white',
+    fontWeight: '600',
+    color: colors.textPrimary,
   },
   activityTrack: {
     flex: 1,
-    height: 4,
-    backgroundColor: '#555',
-    borderRadius: 2,
+    height: 6,
+    backgroundColor: colors.chartBackground,
+    borderRadius: 3,
     position: 'relative',
   },
   activityItem: {
     position: 'absolute',
-    width: 12,
-    height: 12,
-    backgroundColor: '#4A90E2',
-    borderRadius: 6,
-    top: -4,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    top: -5,
+  },
+  activityFood: {
+    backgroundColor: colors.warning,
+  },
+  activityExercise: {
+    backgroundColor: colors.primary,
   },
   timeLabels: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginLeft: 60,
+    marginLeft: 80,
     marginTop: 10,
   },
   timeLabel: {
     fontSize: 12,
-    color: '#CCCCCC',
+    color: colors.textSecondary,
+    fontWeight: '500',
   },
-  spacer: {
-    height: 200,
+  activityDetailsSection: {
+    marginTop: 10,
+    marginBottom: 20,
   },
-  activityOverlay: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#E0E0E0',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    minHeight: 200,
-    maxHeight: '50%',
-    zIndex: 1,
-    paddingBottom: 90,
-  },
-  overlayContent: {
-    padding: 20,
-  },
-  overlayTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    color: '#333',
-    marginBottom: 15,
+  bottomPadding: {
+    height: 90,
   },
   activityCard: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 15,
-    marginBottom: 10,
+    backgroundColor: colors.cardBackground,
+    borderRadius: 20,
+    padding: 20,
+    marginBottom: 15,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   activityHeader: {
     flexDirection: 'row',
@@ -267,26 +234,26 @@ const styles = StyleSheet.create({
     color: '#333',
   },
   mismatchIndicator: {
-    backgroundColor: '#FF6B6B',
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    backgroundColor: colors.cardSecondary,
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
   },
   mismatchText: {
-    fontSize: 12,
-    color: 'white',
-    fontWeight: '500',
+    fontSize: 13,
+    color: colors.warning,
+    fontWeight: '600',
   },
   matchIndicator: {
-    backgroundColor: '#51CF66',
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    paddingVertical: 4,
+    backgroundColor: '#E8F5E8',
+    borderRadius: 12,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
   },
   matchText: {
-    fontSize: 12,
-    color: 'white',
-    fontWeight: '500',
+    fontSize: 13,
+    color: colors.success,
+    fontWeight: '600',
   },
   activityDescription: {
     fontSize: 14,

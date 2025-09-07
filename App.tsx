@@ -3,6 +3,7 @@ import { StyleSheet, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { HomeScreen } from './src/screens/HomeScreen';
 import { LogScreen } from './src/screens/LogScreen';
+import { AddLogScreen } from './src/screens/AddLogScreen';
 import { ReviewScreen } from './src/screens/ReviewScreen';
 import { BottomNavigation } from './src/components/BottomNavigation';
 
@@ -16,7 +17,7 @@ export default function App() {
       case 'log':
         return <LogScreen />;
       case 'add':
-        return <View style={styles.placeholder}><></></View>;
+        return <AddLogScreen />;
       case 'review':
         return <ReviewScreen />;
       case 'profile':
