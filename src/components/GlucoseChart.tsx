@@ -90,12 +90,6 @@ export const GlucoseChart: React.FC<GlucoseChartProps> = () => {
   // Update current time every minute
   useEffect(() => {
     const timer = setInterval(() => {
-      const now = new Date();
-      console.log('Current time update:', {
-        hours: now.getHours(),
-        minutes: now.getMinutes(),
-        timeString: now.toLocaleTimeString('ko-KR', { hour12: false })
-      });
       setCurrentTime(new Date());
     }, 60000);
     
@@ -105,12 +99,6 @@ export const GlucoseChart: React.FC<GlucoseChartProps> = () => {
   // Get current time (using local device time)
   const currentHour = currentTime.getHours() + currentTime.getMinutes() / 60;
   
-  console.log('Debug - Current Time:', {
-    currentTime: currentTime.toLocaleString('ko-KR'),
-    currentHour: currentHour,
-    hours: currentTime.getHours(),
-    minutes: currentTime.getMinutes()
-  });
   
   // 현재 시간 + 1시간의 여유 공간 추가
   const currentDataIndex = Math.floor(currentHour * 6) + 1;
@@ -147,22 +135,11 @@ export const GlucoseChart: React.FC<GlucoseChartProps> = () => {
   // 현재 시간 위치 계산 (전체 표시 영역 중에서)
   const currentTimePosition = CHART_PADDING_LEFT + (currentTimeIndex * dataPointSpacing);
   
-  console.log('Final Position Debug:', {
-    currentHour: currentHour.toFixed(2),
-    totalDisplayPoints: totalDisplayPoints,
-    currentTimeIndex: currentTimeIndex,
-    actualDataWidth: actualDataWidth,
-    dataPointSpacing: dataPointSpacing.toFixed(2),
-    currentTimePosition: Math.round(currentTimePosition),
-    expectedTime: `${Math.floor(currentHour)}:${Math.round((currentHour % 1) * 60).toString().padStart(2, '0')}`,
-    positionPercent: ((currentTimePosition / chartWidth) * 100).toFixed(1) + '%'
-  });
 
   // Auto scroll to current time on mount (only once)
   useEffect(() => {
     if (!hasAutoScrolled && chartScrollRef.current && eventScrollRef.current && !isNaN(currentTimePosition) && currentTimePosition > 0) {
       const scrollPosition = Math.max(0, currentTimePosition - screenWidth / 2);
-      console.log('Auto scrolling to position:', scrollPosition);
       
       setTimeout(() => {
         chartScrollRef.current?.scrollTo({ x: scrollPosition, animated: true });
