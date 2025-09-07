@@ -7,7 +7,7 @@ import {
   ScrollView,
   SafeAreaView,
 } from 'react-native';
-import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons';
 import { PageHeader } from '../components/PageHeader';
 import { ActivityInputScreen } from './ActivityInputScreen';
 import { colors } from '../styles/colors';
@@ -17,89 +17,89 @@ const activitySubMenus = {
   food: {
     title: 'Food',
     items: [
-      { id: 'breakfast', title: 'Breakfast', icon: 'sunny', description: 'Morning meal' },
-      { id: 'lunch', title: 'Lunch', icon: 'partly-sunny', description: 'Midday meal' },
-      { id: 'dinner', title: 'Dinner', icon: 'moon', description: 'Evening meal' },
-      { id: 'snack', title: 'Snack', icon: 'ice-cream', description: 'Between meals' },
-      { id: 'drink', title: 'Drink', icon: 'wine', description: 'Beverages' },
-      { id: 'candy', title: 'Candy', icon: 'gift', description: 'Sweets & chocolate' },
+      { id: 'breakfast', title: 'Breakfast', icon: 'sunny', iconLibrary: 'Ionicons', description: 'Morning meal' },
+      { id: 'lunch', title: 'Lunch', icon: 'partly-sunny', iconLibrary: 'Ionicons', description: 'Midday meal' },
+      { id: 'dinner', title: 'Dinner', icon: 'moon', iconLibrary: 'Ionicons', description: 'Evening meal' },
+      { id: 'snack', title: 'Snack', icon: 'ice-cream', iconLibrary: 'Ionicons', description: 'Between meals' },
+      { id: 'drink', title: 'Drink', icon: 'wine', iconLibrary: 'Ionicons', description: 'Beverages' },
+      { id: 'candy', title: 'Candy', icon: 'gift', iconLibrary: 'Ionicons', description: 'Sweets & chocolate' },
     ]
   },
   activities: {
     title: 'Activities', 
     items: [
-      { id: 'walking', title: 'Walking', icon: 'walk', description: 'Light walking' },
-      { id: 'running', title: 'Running', icon: 'run', description: 'Running exercise' },
-      { id: 'sports', title: 'Sports', icon: 'soccer', description: 'Team sports' },
-      { id: 'swimming', title: 'Swimming', icon: 'swim', description: 'Water activities' },
-      { id: 'cycling', title: 'Cycling', icon: 'bicycle', description: 'Bike riding' },
-      { id: 'playground', title: 'Playground', icon: 'slide', description: 'Playing outside' },
-      { id: 'other', title: 'Other', icon: 'ellipsis-horizontal', description: 'Custom activity' },
+      { id: 'walking', title: 'Walking', icon: 'walk', iconLibrary: 'Ionicons', description: 'Light walking' },
+      { id: 'running', title: 'Running', icon: 'run', iconLibrary: 'MaterialCommunityIcons', description: 'Running exercise' },
+      { id: 'sports', title: 'Sports', icon: 'football', iconLibrary: 'Ionicons', description: 'Team sports' },
+      { id: 'swimming', title: 'Swimming', icon: 'swim', iconLibrary: 'MaterialCommunityIcons', description: 'Water activities' },
+      { id: 'cycling', title: 'Cycling', icon: 'bicycle', iconLibrary: 'Ionicons', description: 'Bike riding' },
+      { id: 'playground', title: 'Playground', icon: 'play', iconLibrary: 'Ionicons', description: 'Playing outside' },
+      { id: 'other', title: 'Other', icon: 'ellipsis-horizontal', iconLibrary: 'Ionicons', description: 'Custom activity' },
     ]
   },
   sleep: {
     title: 'Sleep',
     items: [
-      { id: 'bedtime', title: 'Bedtime', icon: 'bed', description: 'Going to bed' },
-      { id: 'wakeup', title: 'Wake Up', icon: 'alarm', description: 'Morning wake up' },
-      { id: 'nap', title: 'Nap', icon: 'cloud', description: 'Daytime nap' },
+      { id: 'bedtime', title: 'Bedtime', icon: 'bed', iconLibrary: 'Ionicons', description: 'Going to bed' },
+      { id: 'wakeup', title: 'Wake Up', icon: 'alarm', iconLibrary: 'Ionicons', description: 'Morning wake up' },
+      { id: 'nap', title: 'Nap', icon: 'cloud', iconLibrary: 'Ionicons', description: 'Daytime nap' },
     ]
   },
   insulin: {
     title: 'Insulin',
     items: [
-      { id: 'rapid-acting', title: 'Rapid Acting', icon: 'flash', description: 'Fast insulin' },
-      { id: 'long-acting', title: 'Long Acting', icon: 'time', description: 'Basal insulin' },
+      { id: 'rapid-acting', title: 'Rapid Acting', icon: 'flash', iconLibrary: 'Ionicons', description: 'Fast insulin' },
+      { id: 'long-acting', title: 'Long Acting', icon: 'time', iconLibrary: 'Ionicons', description: 'Basal insulin' },
     ]
   },
   'site-change': {
     title: 'Site Change',
     items: [
-      { id: 'cgm-sensor', title: 'CGM Sensor', icon: 'radio', description: 'Glucose monitor' },
-      { id: 'insulin-pump', title: 'Insulin Pump', icon: 'hardware-chip', description: 'Pump site change' },
-      { id: 'injection-site', title: 'Injection Site', icon: 'locate', description: 'New injection spot' },
+      { id: 'cgm-sensor', title: 'CGM Sensor', icon: 'radio', iconLibrary: 'Ionicons', description: 'Glucose monitor' },
+      { id: 'insulin-pump', title: 'Insulin Pump', icon: 'hardware-chip', iconLibrary: 'Ionicons', description: 'Pump site change' },
+      { id: 'injection-site', title: 'Injection Site', icon: 'locate', iconLibrary: 'Ionicons', description: 'New injection spot' },
     ]
   },
   symptoms: {
     title: 'Symptoms',
     items: [
-      { id: 'low-bg', title: 'Low Blood Sugar', icon: 'arrow-down-circle', description: 'Hypoglycemia' },
-      { id: 'high-bg', title: 'High Blood Sugar', icon: 'arrow-up-circle', description: 'Hyperglycemia' },
-      { id: 'nausea', title: 'Nausea', icon: 'sad', description: 'Feeling sick' },
-      { id: 'headache', title: 'Headache', icon: 'thunderstorm', description: 'Head pain' },
-      { id: 'fatigue', title: 'Fatigue', icon: 'battery-dead', description: 'Feeling tired' },
-      { id: 'thirsty', title: 'Thirsty', icon: 'water', description: 'Need water' },
+      { id: 'low-bg', title: 'Low Blood Sugar', icon: 'arrow-down-circle', iconLibrary: 'Ionicons', description: 'Hypoglycemia' },
+      { id: 'high-bg', title: 'High Blood Sugar', icon: 'arrow-up-circle', iconLibrary: 'Ionicons', description: 'Hyperglycemia' },
+      { id: 'nausea', title: 'Nausea', icon: 'sad', iconLibrary: 'Ionicons', description: 'Feeling sick' },
+      { id: 'headache', title: 'Headache', icon: 'thunderstorm', iconLibrary: 'Ionicons', description: 'Head pain' },
+      { id: 'fatigue', title: 'Fatigue', icon: 'battery-dead', iconLibrary: 'Ionicons', description: 'Feeling tired' },
+      { id: 'thirsty', title: 'Thirsty', icon: 'water', iconLibrary: 'Ionicons', description: 'Need water' },
     ]
   },
   mood: {
     title: 'Mood',
     items: [
-      { id: 'happy', title: 'Happy', icon: 'happy', description: 'Feeling good' },
-      { id: 'sad', title: 'Sad', icon: 'sad', description: 'Feeling down' },
-      { id: 'angry', title: 'Angry', icon: 'flame', description: 'Feeling mad' },
-      { id: 'worried', title: 'Worried', icon: 'cloud', description: 'Feeling anxious' },
-      { id: 'excited', title: 'Excited', icon: 'star', description: 'Feeling energetic' },
-      { id: 'tired', title: 'Tired', icon: 'moon', description: 'Feeling sleepy' },
+      { id: 'happy', title: 'Happy', icon: 'happy', iconLibrary: 'Ionicons', description: 'Feeling good' },
+      { id: 'sad', title: 'Sad', icon: 'sad', iconLibrary: 'Ionicons', description: 'Feeling down' },
+      { id: 'angry', title: 'Angry', icon: 'flame', iconLibrary: 'Ionicons', description: 'Feeling mad' },
+      { id: 'worried', title: 'Worried', icon: 'cloud', iconLibrary: 'Ionicons', description: 'Feeling anxious' },
+      { id: 'excited', title: 'Excited', icon: 'star', iconLibrary: 'Ionicons', description: 'Feeling energetic' },
+      { id: 'tired', title: 'Tired', icon: 'moon', iconLibrary: 'Ionicons', description: 'Feeling sleepy' },
     ]
   },
   stress: {
     title: 'Stress',
     items: [
-      { id: 'school', title: 'School', icon: 'school', description: 'School pressure' },
-      { id: 'homework', title: 'Homework', icon: 'book', description: 'Homework stress' },
-      { id: 'friends', title: 'Friends', icon: 'people', description: 'Friend issues' },
-      { id: 'family', title: 'Family', icon: 'home', description: 'Family problems' },
-      { id: 'medical', title: 'Medical', icon: 'medical', description: 'Doctor visits' },
-      { id: 'other', title: 'Other', icon: 'ellipsis-horizontal', description: 'Other stress' },
+      { id: 'school', title: 'School', icon: 'school', iconLibrary: 'Ionicons', description: 'School pressure' },
+      { id: 'homework', title: 'Homework', icon: 'book', iconLibrary: 'Ionicons', description: 'Homework stress' },
+      { id: 'friends', title: 'Friends', icon: 'people', iconLibrary: 'Ionicons', description: 'Friend issues' },
+      { id: 'family', title: 'Family', icon: 'home', iconLibrary: 'Ionicons', description: 'Family problems' },
+      { id: 'medical', title: 'Medical', icon: 'medical', iconLibrary: 'Ionicons', description: 'Doctor visits' },
+      { id: 'other', title: 'Other', icon: 'ellipsis-horizontal', iconLibrary: 'Ionicons', description: 'Other stress' },
     ]
   },
   notes: {
     title: 'Notes',
     items: [
-      { id: 'blood-glucose', title: 'Blood Glucose', icon: 'analytics', description: 'BG reading' },
-      { id: 'doctor-visit', title: 'Doctor Visit', icon: 'medical', description: 'Medical appointment' },
-      { id: 'medication', title: 'Medication', icon: 'medical', description: 'Other medicine' },
-      { id: 'general', title: 'General Note', icon: 'create', description: 'Free text note' },
+      { id: 'blood-glucose', title: 'Blood Glucose', icon: 'analytics', iconLibrary: 'Ionicons', description: 'BG reading' },
+      { id: 'doctor-visit', title: 'Doctor Visit', icon: 'medical', iconLibrary: 'Ionicons', description: 'Medical appointment' },
+      { id: 'medication', title: 'Medication', icon: 'medical', iconLibrary: 'Ionicons', description: 'Other medicine' },
+      { id: 'general', title: 'General Note', icon: 'create', iconLibrary: 'Ionicons', description: 'Free text note' },
     ]
   },
 };
@@ -172,11 +172,19 @@ export const ActivityDetailScreen: React.FC<ActivityDetailScreenProps> = ({
                 activeOpacity={0.7}
               >
                 <View style={styles.itemIconContainer}>
-                  <MaterialCommunityIcons
-                    name={item.icon as any}
-                    size={28}
-                    color={colors.primary}
-                  />
+                  {item.iconLibrary === 'MaterialCommunityIcons' ? (
+                    <MaterialCommunityIcons
+                      name={item.icon as any}
+                      size={28}
+                      color={colors.primary}
+                    />
+                  ) : (
+                    <Ionicons
+                      name={item.icon as any}
+                      size={28}
+                      color={colors.primary}
+                    />
+                  )}
                 </View>
                 <Text style={styles.itemTitle}>{item.title}</Text>
                 <Text style={styles.itemDescription}>{item.description}</Text>
