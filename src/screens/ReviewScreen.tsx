@@ -6,8 +6,11 @@ import {
   ScrollView,
   TouchableOpacity,
   Modal,
+  SafeAreaView,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { colors } from '../styles/colors';
+import { PageHeader } from '../components/PageHeader';
 import { ReportDetailScreen } from './ReportDetailScreen';
 
 interface ReportData {
@@ -109,11 +112,17 @@ export const ReviewScreen: React.FC = () => {
   }
 
   return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
+    <SafeAreaView style={styles.container}>
+      {/* Page Header */}
+      <PageHeader>
         <Text style={styles.headerTitle}>Health Reports</Text>
-        
+      </PageHeader>
+
+      <ScrollView 
+        style={styles.scrollView} 
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
         {/* Toggle Buttons */}
         <View style={styles.toggleContainer}>
           <TouchableOpacity
@@ -133,39 +142,39 @@ export const ReviewScreen: React.FC = () => {
             </Text>
           </TouchableOpacity>
         </View>
-      </View>
 
-      {/* Calendar Header */}
-      <View style={styles.calendarSection}>
-        <View style={styles.calendarHeader}>
-          <TouchableOpacity style={styles.calendarNavButton}>
-            <Ionicons name="chevron-back" size={20} color="white" />
-          </TouchableOpacity>
-          <Text style={styles.calendarTitle}>August 2025</Text>
-          <TouchableOpacity style={styles.calendarNavButton}>
-            <Ionicons name="chevron-forward" size={20} color="white" />
-          </TouchableOpacity>
-        </View>
-        
-        {/* Mini Calendar Dots */}
-        <View style={styles.calendarDots}>
-          {[11, 12, 13, 14, 15, 16, 17].map((day) => {
-            const hasReport = mockReports.some(r => r.date.includes(`-${day.toString().padStart(2, '0')}`));
-            const report = mockReports.find(r => r.date.includes(`-${day.toString().padStart(2, '0')}`));
-            const statusColor = report ? getStatusColor(report.childChecked, report.parentChecked) : '#555';
+        {/* Calendar Header - Only show for daily reports */}
+        {reportType === 'daily' && (
+          <View style={styles.calendarSection}>
+            <View style={styles.calendarHeader}>
+              <TouchableOpacity style={styles.calendarNavButton}>
+                <Ionicons name="chevron-back" size={20} color={colors.primary} />
+              </TouchableOpacity>
+              <Text style={styles.calendarTitle}>August 2025</Text>
+              <TouchableOpacity style={styles.calendarNavButton}>
+                <Ionicons name="chevron-forward" size={20} color={colors.primary} />
+              </TouchableOpacity>
+            </View>
             
-            return (
-              <View key={day} style={styles.calendarDay}>
-                <Text style={styles.calendarDayText}>{day}</Text>
-                {hasReport && <View style={[styles.calendarDot, { backgroundColor: statusColor }]} />}
-              </View>
-            );
-          })}
-        </View>
-      </View>
+            {/* Mini Calendar Dots */}
+            <View style={styles.calendarDots}>
+              {[11, 12, 13, 14, 15, 16, 17].map((day) => {
+                const hasReport = mockReports.some(r => r.date.includes(`-${day.toString().padStart(2, '0')}`));
+                const report = mockReports.find(r => r.date.includes(`-${day.toString().padStart(2, '0')}`));
+                const statusColor = report ? getStatusColor(report.childChecked, report.parentChecked) : '#DDD';
+                
+                return (
+                  <View key={day} style={styles.calendarDay}>
+                    <Text style={styles.calendarDayText}>{day}</Text>
+                    {hasReport && <View style={[styles.calendarDot, { backgroundColor: statusColor }]} />}
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        )}
 
-      {/* Reports List */}
-      <ScrollView style={styles.reportsContainer} showsVerticalScrollIndicator={false}>
+        {/* Reports List */}
         {filteredReports.map((report) => (
           <TouchableOpacity 
             key={report.id} 
@@ -261,14 +270,14 @@ export const ReviewScreen: React.FC = () => {
           </View>
         </View>
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7B7B7B',
+    backgroundColor: colors.background,
   },
   header: {
     paddingTop: 60,
@@ -276,16 +285,22 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   headerTitle: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: 'white',
-    marginBottom: 20,
+    fontSize: 20,
+    fontWeight: '600',
+    color: colors.primary,
   },
   toggleContainer: {
     flexDirection: 'row',
-    backgroundColor: '#555',
+    backgroundColor: colors.cardBackground,
     borderRadius: 12,
     padding: 4,
+    marginHorizontal: 20,
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   toggleButton: {
     flex: 1,
@@ -294,15 +309,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   toggleButtonActive: {
-    backgroundColor: 'white',
+    backgroundColor: colors.primary,
   },
   toggleText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#CCC',
+    color: colors.textSecondary,
   },
   toggleTextActive: {
-    color: '#333',
+    color: colors.textWhite,
   },
   calendarSection: {
     paddingHorizontal: 20,
@@ -318,14 +333,19 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#555',
+    backgroundColor: colors.cardBackground,
     alignItems: 'center',
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
   },
   calendarTitle: {
     fontSize: 18,
     fontWeight: '600',
-    color: 'white',
+    color: colors.textPrimary,
   },
   calendarDots: {
     flexDirection: 'row',
@@ -337,20 +357,27 @@ const styles = StyleSheet.create({
   },
   calendarDayText: {
     fontSize: 14,
-    color: 'white',
+    color: colors.textPrimary,
     marginBottom: 4,
+    fontWeight: '500',
   },
   calendarDot: {
     width: 8,
     height: 8,
     borderRadius: 4,
   },
+  scrollView: {
+    flex: 1,
+  },
+  scrollContent: {
+    paddingBottom: 20,
+  },
   reportsContainer: {
     flex: 1,
     paddingHorizontal: 20,
   },
   reportCard: {
-    backgroundColor: 'white',
+    backgroundColor: colors.cardBackground,
     borderRadius: 16,
     padding: 20,
     marginBottom: 16,
@@ -441,7 +468,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   emojiPickerContainer: {
-    backgroundColor: 'white',
+    backgroundColor: colors.cardBackground,
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 20,
